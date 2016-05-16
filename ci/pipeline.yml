@@ -1,0 +1,23 @@
+---
+resources:
+- name: docker-image-resource
+  type: git
+  source:
+    uri: https://github.com/nkcraddock/docker-image-resource.git
+    branch: master
+- name: docker-image-int
+  type: docker-image
+  source:
+    repository: docker-registry.mia.ulti.io:5000/docker-image-resource
+
+jobs:
+- name: docker-image-resource-build
+  plan:
+  - get: docker-image-resource
+    trigger: true
+  - task: build-docker-shit
+    file: docker-image-resource/ci/build.yml
+  - put: docker-image-int
+    params:
+      build: built-resource/
+

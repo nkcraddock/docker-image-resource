@@ -55,6 +55,8 @@ start_docker() {
     server_args="${server_args} --insecure-registry ${registry}"
   done
 
+	server_args="${server_args} $2"
+
   docker daemon ${server_args} >/tmp/docker.log 2>&1 &
   echo $! > /tmp/docker.pid
 
