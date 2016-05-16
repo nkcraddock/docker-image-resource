@@ -23,7 +23,7 @@ payload=$(mktemp /tmp/resource-in.XXXXXX)
 cat > $payload <&0
 
 insecure_registries=$(jq -r '.source.insecure_registries // [] | join(" ")' < $payload)
-docker_opts="$(jq -r '.params.docker_opts' < $payload)"
+docker_opts="$(jq -r '.params.docker_opts // ""' < $payload)"
 
 start_docker "$insecure_registries" "$docker_opts"
 

@@ -26,7 +26,7 @@ cd $source
 
 insecure_registries=$(jq -r '.source.insecure_registries // [] | join(" ")' < $payload)
 
-docker_opts="$(jq -r '.params.docker_opts' < $payload)"
+docker_opts="$(jq -r '.params.docker_opts // ""' < $payload)"
 
 start_docker "$insecure_registries" "$docker_opts"
 
